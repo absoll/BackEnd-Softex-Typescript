@@ -8,6 +8,10 @@ Considere que:
 - CPU deve estar em GHz; 
 - através do tipo informado, a fábrica decide qual tipo de computador irá instanciar; 
 - quando o método .toString() for aplicado a um computador, ele deve imprimir seus atributos. 
+
+//Exemplos:
+https://sbcode.net/typescript/factory/
+https://refactoring.guru/design-patterns/factory-method
 */
 
 interface Computador{
