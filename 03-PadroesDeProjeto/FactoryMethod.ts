@@ -131,7 +131,11 @@ class Server implements Computador{
 
 class Fabrica{
 
+<<<<<<< HEAD
     computador(ram:number, hdd:number, cpu:number, type:string): Computador{
+=======
+    static computador(ram:number, hdd:number, cpu:number, type:string): Computador{
+>>>>>>> 248cf1f (Implementação padrão Factory Method completo)
         if (type.toLocaleLowerCase() === 'pc')
             return new PC(ram, hdd, cpu, type.toLocaleLowerCase())
         else if (type.toLocaleLowerCase() === 'server')
@@ -139,8 +143,13 @@ class Fabrica{
     }
 }
 
+<<<<<<< HEAD
 let pc:Computador = new Fabrica().computador(16, 512, 2.5, 'pC')
 let servidor:Computador = new Fabrica().computador(64, 2048, 3, 'sErVEr')
+=======
+let pc:Computador = Fabrica.computador(16, 512, 2.5, 'pC')
+let servidor:Computador = Fabrica.computador(64, 2048, 3, 'sErVEr')
+>>>>>>> 248cf1f (Implementação padrão Factory Method completo)
 
 console.log(pc.toString())
 console.log(servidor.toString())
