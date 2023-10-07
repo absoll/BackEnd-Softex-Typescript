@@ -20,6 +20,8 @@ https://stackoverflow.com/questions/28150967/typescript-cloning-object/28152032#
 
 */
 
+import { isThisTypeNode } from "typescript"
+
 abstract class Veiculo {
     modelo: string
     marca: string
@@ -34,15 +36,27 @@ abstract class Veiculo {
     }
 
     represent() {
+        console.log(`Tipo Veiculo: ${(this as any).constructor.name}`)
+        for (let atributo in this) {
+            //Codigo abaixo ta dividido em tres partes:
+            //1 - STRING.replace(/([A-Z])/g, ' $1').trim() -> Vai adicionar um espaço em branco antes de cada letra maiuscula, assim variaveis camelCase vao ter espaco em vez de estarem coladas
+            //2 - STRING.slice(1)-> Pega apenas os caracteres a partir da segunda posicao para adicionar o espaco antes da letra maisucula
+            //3 - STRING.chatAt(0) -> coloca o caractere 0 em maisculo
+            let texto: string = atributo.charAt(0).toLocaleUpperCase() + atributo.slice(1).replace(/([A-Z])/g, ' $1').trim()
+
+            console.log(`${texto}: ${this[atributo]}`)
+        }
+        /*
         console.log(`Modelo: ${this.modelo}`)
         console.log(`Marca: ${this.marca}`)
         console.log(`Cor: ${this.cor}`)
         console.log(`Numero de Rodas: ${this.numeroRodas}`)
+        */
     }
 
     clone(): any {
         //é como se fosse "Object.assign(new MOTO(), this)"
-        return Object.assign(eval(`new ${(this as any).constructor.name}()`), this) // -> MELHOR MODO. Cria objetos independentes e ESPECIFICA o tipo de cada um, assim pode chamar seus metodos
+        return Object.assign(eval(`new ${this.constructor.name}()`), this) // -> MELHOR MODO. Cria objetos independentes e ESPECIFICA o tipo de cada um, assim pode chamar seus metodos
         // return Object.assign({}, this) // -> Cria objetos GENERICOS INDEPENDENTES. Alterar a informação de um não modifica o do outro, porém esses objetos nao tem metodos
         // return Object.assign(this) // shallow copy -> Cria objetos "interligados". Ao mudar o valor de um deles, muda o dos outros. Não possui os metodos da classe ('represent' nao funciona)
         //  return JSON.stringify(this); //deep copy -> Retorna um JSON com os dados do objeto. Util se quiser criar um novo objeto com esses dados
@@ -61,12 +75,13 @@ class Carro extends Veiculo {
         this.numeroPortas = numeroPortas
     }
 
+    /*
     represent() {
         console.log("Tipo Veiculo: Carro")
         super.represent()
         console.log(`Numero de Portas: ${this.numeroPortas}`)
     }
-
+    */
 }
 
 class Moto extends Veiculo {
@@ -77,11 +92,13 @@ class Moto extends Veiculo {
         this.cilindradas = cilindradas
     }
 
+    /*
     represent() {
         console.log("Tipo Veiculo: Moto")
         super.represent()
         console.log(`Cilindradas: ${this.cilindradas}`)
     }
+    */
 }
 
 
